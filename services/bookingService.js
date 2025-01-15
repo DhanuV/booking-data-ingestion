@@ -112,4 +112,20 @@ const getBookingById = async (id) => {
     }
   };
 
-module.exports = { createBooking, getBookings, getBookingById };
+/**
+ * Delete booking by ID
+ * @param {String} id Booking ID
+ * @returns true if Booking based on booking ID is deleted
+ */const deleteBookingById = async (id) => {
+    try {
+      const result = await Booking.deleteOne({ bookingId: id });
+      if (result.deletedCount === 0) {
+        return { success: false, error: 'Booking not found' };
+      }
+      return { success: true };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  };
+
+module.exports = { createBooking, getBookings, getBookingById, deleteBookingById };

@@ -48,4 +48,16 @@ const getBookingById = async (req, res) => {
     }
   };
 
-module.exports = { createBooking, getBookings, getBookingById };
+  
+// Delete a booking by ID
+const deleteBookingById = async (req, res) => {
+    const { id } = req.params;
+    const result = await bookingService.deleteBookingById(id);
+    if (result.success) {
+      return res.status(200).json({ success: true });
+    } else {
+      return res.status(404).json({ success: false, message: result.error });
+    }
+  };
+
+module.exports = { createBooking, getBookings, getBookingById, deleteBookingById };
