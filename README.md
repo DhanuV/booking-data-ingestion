@@ -1,6 +1,8 @@
 # **Booking Data Ingestion System**
+---
 ## **NOTE**
 **POSTMAN COLLECTION LINK** (https://www.postman.com/dhanushv56/finkraft-ai/collection/b9vuruf/api?action=share&creator=41098241)
+
 ## **Features**
 
 1. **CRUD Operations**: Create, retrieve, and delete booking records with ease.
@@ -149,5 +151,10 @@ booking-data-ingestion/
 6. Monitoring using **Data Dog** and **Sentry**
 7. Introduce logging with tools like **Winston** or **Morgan**.
 8. Clustering and Monitoring using **PM2**
+
+---
+sequenceDiagram
+
+![image](https://github.com/user-attachments/assets/ddc70c53-9b54-4e63-a0f8-8f63e385562a)
 
 ---
