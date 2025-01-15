@@ -95,6 +95,21 @@ const getBookings = async (filters = {}, page = 1, limit = 10) => {
   }
 };
 
+/**
+ * Get booking by ID
+ * @param {String} id Booking ID
+ * @returns Booking based on booking ID
+ */
+const getBookingById = async (id) => {
+    try {
+      const booking = await Booking.findOne({bookingId:id});
+      if (!booking) {
+        return { success: false, error: 'Booking not found' };
+      }
+      return { success: true, booking };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  };
 
-
-module.exports = { createBooking, getBookings };
+module.exports = { createBooking, getBookings, getBookingById };

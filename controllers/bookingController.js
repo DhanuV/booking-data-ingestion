@@ -37,4 +37,15 @@ const getBookings = async (req, res) => {
   }
 };
 
-module.exports = { createBooking, getBookings };
+// Get a booking by ID with caching
+const getBookingById = async (req, res) => {
+    const { id } = req.params;
+    const result = await bookingService.getBookingById(id);
+    if (result.success) {
+      return res.status(200).json({ success: true, booking: result.booking });
+    } else {
+      return res.status(404).json({ success: false, message: result.error });
+    }
+  };
+
+module.exports = { createBooking, getBookings, getBookingById };
