@@ -1,4 +1,5 @@
 const Booking = require('../models/booking');
+const validateBookingData = require('../validators/bookingValidator');
 
 /**
  * Normalize booking data by converting data to standard format
@@ -18,11 +19,15 @@ const normalizeBookingData = (data) => {
  * @returns success:true if booking is created and success:false in all other scenarios
  */
 const createBooking = async (data) => {
-    const normalizedData = normalizeBookingData(data);
+  const { error } = validateBookingData(data);
+  if (error) {
+    return { success: false, error: error.details[0].message };
+  }
+  const normalizedData = normalizeBookingData(data);
   try {
     const newBooking = new Booking(normalizedData);
     await newBooking.save();
-    return { success: true, data: newBooking };
+    return { success: true, booking: newBooking };
   } catch (err) {
     return { success: false, error: err.message };
   }
