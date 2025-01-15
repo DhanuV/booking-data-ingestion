@@ -49,6 +49,19 @@ const getBookings = async (filters = {}, page = 1, limit = 10) => {
     const { date, vendor } = filters;
     const query = {};
 
+    // Filter by date
+    if (date) {
+      // Ensure the date is in the correct format
+      const parsedDate = new Date(date);
+      if (!isNaN(parsedDate)) {
+        const startOfDay = new Date(parsedDate.setUTCHours(0, 0, 0, 0));
+        const endOfDay = new Date(parsedDate.setUTCHours(23, 59, 59, 999));
+        query.bookingDate = { $gte: startOfDay, $lt: endOfDay };
+      } else {
+        throw new Error('Invalid date format. Use YYYY-MM-DD.');
+      }
+    }
+
     // Filter by vendor
     if (vendor) {
       query.vendor = { $regex: vendor, $options: 'i' };
@@ -61,6 +74,7 @@ const getBookings = async (filters = {}, page = 1, limit = 10) => {
     const bookings = await Booking.find(query)
       .skip((page - 1) * limit)
       .limit(limit)
+      .sort({ bookingDate: -1 }) // Sort by date, most recent first
       .lean();
 
     return {
@@ -77,7 +91,7 @@ const getBookings = async (filters = {}, page = 1, limit = 10) => {
     };
   } catch (err) {
     console.error('Error in getBookings service:', err);
-    return { success: false, error: 'Failed to retrieve bookings.' };
+    return { success: false, error: err.message || 'Failed to retrieve bookings.' };
   }
 };
 
