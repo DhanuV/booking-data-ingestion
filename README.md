@@ -1,9 +1,6 @@
-Here’s a **README.md** file for your **Booking Data Ingestion System** project:
-
----
-
 # **Booking Data Ingestion System**
-
+## **NOTE**
+**POSTMAN COLLECTION LINK** (https://www.postman.com/dhanushv56/finkraft-ai/collection/b9vuruf/api?action=share&creator=41098241)
 ## **Features**
 
 1. **CRUD Operations**: Create, retrieve, and delete booking records with ease.
