@@ -1,13 +1,26 @@
 const Booking = require('../models/booking');
 
 /**
+ * Normalize booking data by converting data to standard format
+ * @param {*} data 
+ * @returns Booking with converted date to standard format
+ */
+const normalizeBookingData = (data) => {
+    return {
+      ...data,
+      bookingDate: new Date(data.bookingDate).toISOString(),
+    };
+  };
+
+/**
  * Create Booking
  * @param {bookingId, customerName, bookingDate, amount, vendor} data Consisting of booking details
  * @returns success:true if booking is created and success:false in all other scenarios
  */
 const createBooking = async (data) => {
+    const normalizedData = normalizeBookingData(data);
   try {
-    const newBooking = new Booking(data);
+    const newBooking = new Booking(normalizedData);
     await newBooking.save();
     return { success: true, data: newBooking };
   } catch (err) {
